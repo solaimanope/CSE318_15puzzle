@@ -54,7 +54,9 @@ public class Main {
         Grid startGrid = new Grid(start);
         Grid goalGrid = new Grid(goal);
 
+        System.out.println();
         AStarSolver(startGrid, goalGrid, 1);
+        System.out.println("\n#####################################\n");
         AStarSolver(startGrid, goalGrid, 2);
     }
 
@@ -66,7 +68,7 @@ public class Main {
         Map<Grid, Integer>map = new HashMap<>();
         PriorityQueue<Node> pq = new PriorityQueue<>(new NodeComparator());
 
-        pq.add(new Node(startGrid, 0, startGrid.heuristic(heuristicType)));
+        pq.add(new Node(startGrid, 0, startGrid.heuristic(goalGrid, heuristicType)));
         map.put(startGrid, 0);
 
         Grid finalGrid = null;
@@ -88,7 +90,7 @@ public class Main {
                 Integer I = map.get(gv);
                 if (I == null || I > u.g()+1) {
                     map.put(gv, u.g()+1);
-                    pq.add(new Node(gv, u.g()+1, gv.heuristic(heuristicType)));
+                    pq.add(new Node(gv, u.g()+1, gv.heuristic(goalGrid, heuristicType)));
                     addedToPQ++;
                 }
             }

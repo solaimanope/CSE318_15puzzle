@@ -28,16 +28,39 @@ public class Grid {
         return parent;
     }
 
-    private int displacementHeuristic() {
-        return 0;
+    private int displacementHeuristic(Grid goal) {
+        int h = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (grid[i][j] == 0) continue;
+                if (goal.grid[i][j] != grid[i][j]) h++;
+            }
+        }
+        return h;
     }
-    private int manhattanHeuristic() {
-        return 0;
+    private int manhattanHeuristic(Grid goal) {
+        int[] rx = new int[16];
+        int[] ry = new int[16];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                rx[goal.grid[i][j]] = i;
+                ry[goal.grid[i][j]] = j;
+            }
+        }
+
+        int h = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (grid[i][j] == 0) continue;
+                h += Math.abs(i-rx[grid[i][j]])+Math.abs(j-ry[grid[i][j]]);
+            }
+        }
+        return h;
     }
 
-    public int heuristic(int type) {
-        if (type == 1) return displacementHeuristic();
-        if (type == 2) return manhattanHeuristic();
+    public int heuristic(Grid goal, int type) {
+        if (type == 1) return displacementHeuristic(goal);
+        if (type == 2) return manhattanHeuristic(goal);
         return 0;
     }
 
