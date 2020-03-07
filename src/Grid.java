@@ -3,6 +3,7 @@ public class Grid {
     private Long bitrep;
     private int _x, _y;
     private Grid parent;
+    private Move lastMove;
 
     public Grid(int[][] grid) {
         this.grid = new int[4][4];
@@ -18,6 +19,7 @@ public class Grid {
             }
         }
         parent = null;
+        lastMove = null;
     }
 
     public int[][] getGrid() {
@@ -26,6 +28,10 @@ public class Grid {
 
     public Grid getParent() {
         return parent;
+    }
+
+    public Move getLastMove() {
+        return lastMove;
     }
 
     private int displacementHeuristic(Grid goal) {
@@ -81,6 +87,7 @@ public class Grid {
 
         Grid g = new Grid(tmp);
         g.parent = this;
+        g.lastMove = move;
         return g;
     }
 
